@@ -25,24 +25,59 @@ class Home extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.red[600],
       ),
-      body: Center(
-        child:
-            // Shortcut
-            Image.asset('assets/asset-3.jpg'),
-        // Image.network('url-to-img.com')
-        // Image(
-        //   image:
-        //       // NetworkImage('https://images.unsplash.com/photo-1537151672256-6caf2e9f8c95?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80'),
-
-        //       // To add AssetImage (localImage), write images path to pubspec.yaml
-        //       AssetImage('assets/asset-3.jpg'),
-        // ),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          ColumnInRow(),
+          ColumnInRow(),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => [],
-        child: const Text('Click'),
+        child:
+            const Icon(Icons.plus_one_rounded, color: Colors.white, size: 25.0),
         backgroundColor: Colors.red[600],
       ),
+    );
+  }
+}
+
+class ColumnInRow extends StatelessWidget {
+  const ColumnInRow({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+          color: Colors.red,
+          child: Image.asset(
+            'assets/asset-1.jpg',
+            height: 128.0,
+            width: 128.0,
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+          color: Colors.green,
+          child: Image.asset(
+            'assets/asset-2.jpg',
+            height: 128.0,
+            width: 128.0,
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+          color: Colors.blue,
+          child: Image.asset(
+            'assets/asset-3.jpg',
+            height: 128.0,
+            width: 128.0,
+          ),
+        ),
+      ],
     );
   }
 }
