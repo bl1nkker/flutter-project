@@ -18,15 +18,31 @@ class _HomeState extends State<Home> {
         ? data
         : ModalRoute.of(context)!.settings.arguments as Map;
     String bgImage = '${data['dayPart']}-1.jpg';
-    Color bgColor =
-        data['dayPart'] == 'morning' ? Colors.lightBlue : Colors.indigo;
+    print(data);
+
+    Color bgColor = data['dayPart'] == 'morning'
+        ? Colors.lightBlue.shade200
+        : data['dayPart'] == 'noon'
+            ? Colors.cyan.shade600
+            : data['dayPart'] == 'evening'
+                ? Colors.cyan.shade900
+                : Colors.deepPurple.shade800;
+    Color textColor = data['dayPart'] == 'morning'
+        ? Colors.grey.shade100
+        : data['dayPart'] == 'noon'
+            ? Colors.yellow.shade600
+            : data['dayPart'] == 'evening'
+                ? Colors.cyan.shade900
+                : Colors.white;
+
     return Scaffold(
         backgroundColor: bgColor,
         body: SafeArea(
             child: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/${bgImage}'), fit: BoxFit.cover)),
+                  image: AssetImage('assets/backgrounds/${bgImage}'),
+                  fit: BoxFit.cover)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -44,10 +60,13 @@ class _HomeState extends State<Home> {
                     };
                   });
                 },
-                icon: Icon(Icons.edit_location),
+                icon: Icon(Icons.edit_location, color: textColor),
                 label: Text(
                   'Edit location',
-                  style: TextStyle(fontFamily: 'StickNoBills', fontSize: 24.0),
+                  style: TextStyle(
+                      fontFamily: 'StickNoBills',
+                      fontSize: 24.0,
+                      color: textColor),
                 ),
               ),
               SizedBox(
@@ -56,7 +75,10 @@ class _HomeState extends State<Home> {
               Center(
                 child: Text(
                   data['time'],
-                  style: TextStyle(fontSize: 64.0, fontFamily: 'StickNoBills'),
+                  style: TextStyle(
+                      fontSize: 64.0,
+                      fontFamily: 'StickNoBills',
+                      color: textColor),
                 ),
               ),
               SizedBox(
@@ -68,7 +90,8 @@ class _HomeState extends State<Home> {
                   style: TextStyle(
                       fontSize: 36.0,
                       letterSpacing: 2.0,
-                      fontFamily: 'StickNoBills'),
+                      fontFamily: 'StickNoBills',
+                      color: textColor),
                 ),
               ),
             ],

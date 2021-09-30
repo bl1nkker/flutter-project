@@ -28,7 +28,13 @@ class WorldTime {
           .format(now.add(Duration(hours: int.parse(offset.substring(1, 3)))))
           .toString();
       // Set bool
-      dayPart = now.hour > 6 && now.hour < 20 ? 'night' : 'night';
+      dayPart = now.hour > 6 && now.hour < 12
+          ? 'morning'
+          : now.hour >= 12 && now.hour < 18
+              ? 'noon'
+              : now.hour >= 18 && now.hour < 21
+                  ? 'evening'
+                  : 'night';
     } catch (e) {
       time = 'Could not fetch the time data!';
       dayPart = 'noon';
