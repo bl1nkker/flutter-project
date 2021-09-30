@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_first_flutter_app/services/world_time.dart';
 
 class ChooseLocation extends StatefulWidget {
   @override
@@ -6,21 +7,28 @@ class ChooseLocation extends StatefulWidget {
 }
 
 class _ChooseLocationState extends State<ChooseLocation> {
-  // async function
-  void getData() async {
-    // simulate network request for a username
-    await Future.delayed(const Duration(seconds: 3), () {
-      print('yoshi');
-    });
-    print('Hello world');
-  }
+  List<WorldTime> locations = [
+    WorldTime(url: 'Europe/London', location: 'London', flag: 'uk.png'),
+    WorldTime(url: 'Europe/Athens', location: 'Athens', flag: 'greece.png'),
+    WorldTime(url: 'Africa/Cairo', location: 'Cairo', flag: 'egypt.png'),
+    WorldTime(url: 'Africa/Nairobi', location: 'Nairobi', flag: 'kenya.png'),
+    WorldTime(url: 'America/Chicago', location: 'Chicago', flag: 'usa.png'),
+    WorldTime(url: 'America/New_York', location: 'New York', flag: 'usa.png'),
+    WorldTime(url: 'Asia/Seoul', location: 'Seoul', flag: 'south_korea.png'),
+    WorldTime(url: 'Asia/Jakarta', location: 'Jakarta', flag: 'indonesia.png'),
+  ];
 
-  // LifeCycle: on mounting component
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getData();
+  void updateTime(index) async {
+    WorldTime instance = locations[index];
+    await instance.getTime();
+    // When presses, this will pops back to the home page (home page is still open at the background)
+    // and return an object
+    Navigator.pop(context, {
+      "location": instance.location,
+      "flag": instance.flag,
+      "time": instance.time,
+      "dayPart": instance.dayPart
+    });
   }
 
   // LifeCycle: on every update of the component
@@ -30,6 +38,18 @@ class _ChooseLocationState extends State<ChooseLocation> {
         appBar: AppBar(
           title: const Text('Choose your location'),
         ),
-        body: const Text('Choose Location Screen'));
+        body: ListView.builder(
+          itemCount: locations.length,
+          itemBuilder: (context, index) {
+            return Card(
+              child: ListTile(
+                onTap: () {
+                  updateTime(index);
+                },
+                title: Text(locations[index].location),
+              ),
+            );
+          },
+        ));
   }
 }
